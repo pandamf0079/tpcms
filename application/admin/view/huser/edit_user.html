@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+<meta name="author" content="peng">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+<link href="__STATIC__/layui/css/layui.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>编辑用户</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Huser/saveedit_user" method="post" name="form1">
+                            <div class="form-group ">
+                                <label>用户昵称:</label>
+                                <input class="form-control" type="text" id="name" name="name" placeholder="请输入名字.." value="{$user_data.name}">
+                            </div>
+							<div class="form-group ">
+                                <label>电话:</label>
+                                <input class="form-control" type="text" id="phone" name="phone" placeholder="请输入电话.." value="{$user_data.phone}">
+                            </div>
+							<div class="form-group ">
+                                <label>身份证:</label>
+                                <input class="form-control" type="text" id="cardid" name="cardid" placeholder="请输入身份证.." value="{$user_data.cardid}">
+                            </div>
+							<div class="form-group ">
+                                <label>实名:</label>
+                                <input class="form-control" type="text" id="realname" name="realname" placeholder="请输入实名.." value="{$user_data.realname}">
+                            </div>
+							<div class="form-group ">
+                                <label>实名状态:</label>
+								<div>
+									{if $user_data.is_real==1}
+                                	<span class="label label-success">已实名</span>
+									{else}
+									<span class="label label-default">没实名</span>
+									{/if}
+								</div>
+                            </div>
+							<div class="form-group ">
+                                <label>微信头像:</label>
+								<div>
+                                	<img width="50" height="50" src="{$user_data.avatar}"/>
+								</div>
+                            </div>
+							<div class="form-group clearfix">
+                                <label style="float:left;">当前客户经理:</label>
+								<div class="col-md-1" id="client_name" style="float:left; width:200px">
+									{$manager_name}
+								</div>
+								<span class="btn btn-xs btn-primary" id="edit-button">修改</span>
+								<br class="clearfix" />
+								<div class="col-xs-4 card" style="padding:20px; display:none;" id="card-edit" >
+									
+									<input class="form-control"  id="ss_phone" name="ss_phone" placeholder="请输入客户经理手机.." style=" float:left;width:50%;" onChange="getmanagers();" onKeyUp="getmanagers();">
+									<select class="form-control " id="ss-select" name="ss-select" size="1" style="height:38px; width:49%; margin-left:1%; float:left;" onChange="seesee();">
+										<option value="0">请选择</option>
+									</select>
+								</div>
+								
+                            </div>
+							
+							<br/>
+                            <div class="form-group">
+							  <input type="hidden" name="token" value="{$token}"/>
+							  <input type="hidden" name="uid" value="{$user_data.uid}"/>
+							  <input type="hidden" name="manage_id" value="{$user_data.manage_id}"/>
+                              <button class="btn btn-primary btn-w-md" type="submit">提交编辑</button>
+                              <button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+							  <button class="btn btn-default btn-w-md" type="button" onClick="tranfer_client({$user_data.uid});">转客户经理</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+
+<script>
+$("#edit-button").click(function(){
+	$("#card-edit").slideToggle();
+});
+
+function tranfer_client(uid){
+	if(!confirm("确认要转换为客户经理吗?")){ return false; }
+	$.ajax({
+		type: "GET",
+		url: "/admin/Huser/transfers",
+		data: "uid="+uid+"&t="+Math.random(),			
+		dataType: "json",
+		success: function(data){
+			if(data==1){
+				alert('转换成功!');
+				location.href='/admin/Hmanage/index.html';
+			}else{
+				alert('转换失败,请稍候再试!');
+				return false;
+			}			
+		},
+		error: function (XMLHttpRequest,textStatus) {
+			alert(XMLHttpRequest.status);  //如果上面的url不存在，返回404
+			alert(textStatus); //error
+			alert(errorThrown);
+		}
+	})	
+}
+
+
+function getmanagers(){
+	var tmp = $("#ss_phone").val();
+	if(tmp.length < 10 ){return false;}
+	$.ajax({
+		type: "GET",
+		url: "/admin/Huser/get_manager",
+		data: "phone="+tmp+"&t="+Math.random(),			
+		dataType: "json",
+		success: function(data){
+			var str = '<option value="0">请选择</option>';
+			for(var i=0;i<parseInt(data.length);i++){
+				str += '<option value="'+data[i].uid+'">'+data[i].realname+'('+data[i].nickname+')'+'</option>';             
+			}
+			$("#ss-select").html(str);			
+		},beforeSend: function(XMLHttpRequest){
+            $("#ss-select").html('<option value="0">查询中..</option>');
+        },
+	})	
+	
+}
+
+function seesee(){
+	var v = $("#ss-select option:selected").val();
+	var t = $("#ss-select option:selected").text();
+	$("#client_name").html(t);
+	$("input[name='manage_id']").val(v);
+}
+
+</script>
+
+</body>
+</html>

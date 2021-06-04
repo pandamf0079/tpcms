@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+<link rel="stylesheet" href="__ADMINJS__/jconfirm/jquery-confirm.min.css">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  	<div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+        <div class="container-fluid">  
+        	<div class="row">
+          		<div class="col-lg-12">
+            		<div class="card">
+              			<div class="card-toolbar clearfix">
+                			<form class="pull-right search-bar" method="get" action="/admin/Hborrow/index" role="form">
+                  				<div class="input-group">
+                    				<div class="input-group-btn">
+                      					<input type="hidden" name="search_field" id="search-field" value="">
+                      					<button class="btn btn-default dropdown-toggle" id="search-btn" data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false">名称 <span class="caret"></span></button>
+                    				</div>
+                   		 			<input type="text" class="form-control" value="{$keyword}" name="keyword" placeholder="请输入名称">
+                  				</div>
+                			</form>
+							<div class="toolbar-btn-action">
+								<a class="btn btn-primary m-r-5" href="/admin/Hborrow/add_borrow"><i class="mdi mdi-plus"></i> 新增项目</a>
+								<a class="btn btn-danger" href="javascript0:void();" onclick="pro_delete();"><i class="mdi mdi-window-close"></i> 删除</a>
+							</div>
+              			</div>
+					    <div class="card-body">
+							<div class="table-responsive">
+						  		<table class="table table-bordered">
+									<thead>
+							  			<tr>
+											<th>
+												<label class="checkbox checkbox-primary">
+													<input type="checkbox" id="check-all"><span></span>
+											  	</label>
+											</th>
+											<th>编号</th>
+											<th>名字</th>
+											<th>总金额</th>
+											<th>期限</th>
+											<th>添加日期</th>
+											<th>期限类型</th>
+											<th>回款方式</th>
+											<th>剩余额度</th>
+											<th>操作</th>
+							  			</tr>
+									</thead>
+									<tbody>
+							 		    {volist name="list" id="vo"}
+										<tr>
+											<td>
+												<label class="checkbox checkbox-primary">
+													<input type="checkbox" name="id[]" value="{$vo.id}"><span></span>
+											  	</label>
+											</td>
+											<td>{$vo.id}</td>
+											<td>{$vo.name}</td>
+											<td>{$vo.account}</td>
+											<td>{$vo.months}</td>
+											<td>{$vo.addtime|date='Y-m-d H:i:s',###}</td>
+											<td>{$vo.qixianleixing}</td>
+											<td>{$vo.style}</td>
+											<td>{$vo.account_other}</td>
+											<td>
+												<div class="btn-group">
+													<a class="btn btn-xs btn-default" href="/admin/Hborrow/edit_borrows/id/{$vo.id}" title="编辑" data-toggle="tooltip"><i class="mdi mdi-pencil"></i></a>
+													<a class="btn btn-xs btn-default" href="javascript:void(0)" onclick="funct_del({$vo.id});" title="删除" data-toggle="tooltip"><i class="mdi mdi-window-close"></i></a>
+					
+												</div>
+											</td>
+							
+										 </tr>
+										 {/volist}
+									</tbody>
+						  		</table>
+							</div>
+							{$page}			
+					  	</div>
+            </div>
+          </div>
+          
+        </div>
+
+
+        
+      </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+<script src="__ADMINJS__/jconfirm/jquery-confirm.min.js"></script>
+
+<!--图表插件-->
+<script type="text/javascript" src="__ADMINJS__/Chart.js"></script>
+<script type="text/javascript">
+
+  function funct_del(sid){
+    if(!confirm("确认要删除吗?")){ return false; }
+    location.href='/admin/Hborrow/del_borrow/id/'+sid;
+  }
+
+
+  function pro_delete() {
+    //获取已经勾选的复选框
+    var checkedId=new Array();  //定义一个数组来保存已选中的value值
+    $('input[name="ids[]"]:checked').each(function(){
+      if(!isNaN($(this).val())){
+        checkedId.push($(this).val());
+      }else{
+        console.log("拿不到");
+      }
+    });
+    if(checkedId.length == 0){
+      alert("请选择要删除的信息！");
+      return false;
+    }
+    
+    //进行批量删除操作
+    $.ajax({
+      type:"POST",
+      url:"/admin/Gift/delmul/",
+      data:{"id":checkedId.toString()},
+      success:function (data) {
+        if(data==1){
+            $.alert({
+                title: '系统消息',
+                content:"删除成功",
+                buttons: {
+                  confirm: {
+                    text: '确认',
+                    btnClass: 'btn-primary',
+                    action: function(){
+                        location.reload();
+                    }
+                  },
+                }
+            });
+        }
+        
+        // 
+        return false;
+        //  //重新刷新页面
+      },
+      error:function () {
+        alert("请求失败！");
+      }
+    });
+  }
+
+
+</script>
+</body>
+</html>

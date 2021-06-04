@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>编辑</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Hborrow/saveedit_borrows" method="post" name="form1">
+                            <div class="form-group ">
+                                <label>产品名:</label>
+                                <input class="form-control" type="text" id="name" name="name" placeholder="请输入名字.." value="{$borrow_data.name}">
+                            </div>
+                            <div class="form-group ">
+                                <label>募集总金额:</label>
+                                <div class="input-group m-b-10">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="account" name="account" value="{$borrow_data.account}" >
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>利率:</label>
+                                <input class="form-control" type="text" id="apr" name="apr" placeholder="请输入利率.." value="{$borrow_data.apr}">
+                            </div>
+							<div class="form-group">
+                                <label>期限:</label>
+                                <input class="form-control" type="text" id="months" name="months" placeholder="请输入期限.." value="{$borrow_data.months}">
+                            </div>
+                            <div class="form-group ">
+                                <label>起投金额:</label>
+                                <div class="input-group m-b-10">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="limit" name="limit"  value="{$borrow_data.limit}">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                            </div>
+                      
+                            <div class="form-group " >
+								<label>回款方式:</label>
+							  	<select class="form-control" id="style" name="style" size="1">
+									<option value="0">请选择</option>
+									<option value="1">分期还本付息</option>
+									<option value="2">等额本息</option>
+							  	</select>
+						  	</div>
+                            
+                            
+
+                            <div class="form-group">
+                                <label>描述:</label>
+                                <div >
+                                    <textarea class="form-control" id="intro" name="intro" rows="6" placeholder="内容.." >{$borrow_data.intro}</textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+								<input type="hidden" name="token" value="{$token}"/>
+								<input type="hidden" name="id" value="{$borrow_data.id}"/>
+                              	<button class="btn btn-primary btn-w-md" type="submit">编辑保存</button>
+                              	<button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+<script>
+$(function(){  
+	var style = '{$borrow_data.style}';
+	$("#style option[value='"+style+"']").attr("selected", true);	
+});
+</script>
+
+</body>
+</html>

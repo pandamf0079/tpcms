@@ -1,0 +1,61 @@
+<aside class="layout-sidebar">
+  <!-- logo -->
+  <div id="logo" class="sidebar-header">
+	<a href="index.html"><img src="__ADMINIMG__/logo-sidebar.png" title="" alt="" /></a>
+  </div>
+  <div class="layout-sidebar-scroll"> 
+	
+	<nav class="sidebar-main">
+	  <ul class="nav nav-drawer">
+	  	<li class="nav-item {if condition="$Request.controller eq 'Index' && $Request.action eq 'index' "} active{/if} ">
+			<a href="/admin/Index/index.html"><i class="mdi mdi-home-outline"></i>后台首页</a> 
+		</li>
+		
+		<li class="nav-item nav-item-has-subnav {if condition="$Request.controller eq 'Huser' || $Request.controller eq 'Hmanage' " } active open {/if} ">
+		  <a href="javascript:void(0)"><i class="mdi mdi-account-circle"></i> 客户管理</a>
+		  <ul class="nav nav-subnav">
+			<li {if condition="$Request.controller eq 'Huser' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Huser/index.html">客户列表</a> </li>
+			<li {if condition="$Request.controller eq 'Hmanage' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Hmanage/index.html">客户经理列表</a> </li>
+		  </ul>
+		</li>
+		<li class="nav-item nav-item-has-subnav {if condition="$Request.controller eq 'Hborrow' || $Request.controller eq 'appointment' " } active open {/if} ">
+		  <a href="javascript:void(0)"><i class="mdi mdi-widgets"></i> 项目管理</a>
+		  <ul class="nav nav-subnav">
+			<li {if condition="$Request.controller eq 'Hborrow' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Hborrow/index.html">项目列表</a> </li>
+
+		  </ul>
+		</li>
+		<li class="nav-item nav-item-has-subnav {if condition="$Request.controller eq 'Hhetong' || $Request.controller eq 'Diy' " } active open {/if} ">
+		  <a href="javascript:void(0)"><i class="mdi mdi-file-pdf"></i> 合同管理</a>
+		  <ul class="nav nav-subnav">
+			<li {if condition="$Request.controller eq 'Hhetong' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Hhetong/index.html">合同列表</a> </li>
+		  </ul>
+		</li>
+		<li class="nav-item nav-item-has-subnav {if condition="$Request.controller eq 'Hcompany' || $Request.controller eq 'Hnews' " } active open {/if} ">
+		  <a href="javascript:void(0)"><i class="mdi mdi-image-filter-none"></i> 资讯管理</a>
+		  <ul class="nav nav-subnav">
+			<li {if condition="$Request.controller eq 'Hnews' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Hnews/index.html">新闻列表</a> </li>
+			<li {if condition="$Request.controller eq 'Hcompany' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Hcompany/index.html">公司信息</a> </li>
+		  </ul>
+		</li>
+		<li class="nav-item nav-item-has-subnav {if condition="$Request.controller eq 'Rulegroup' || $Request.controller eq 'Rulelist' || $Request.controller eq 'Adminlist' " } active open {/if} ">
+		  <a href="javascript:void(0)"><i class="mdi mdi-account-box"></i> 管理员设置</a>
+		  <ul class="nav nav-subnav">
+			<li {if condition="$Request.controller eq 'Rulelist' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Rulelist/index.html">权限管理</a> </li>
+			<li {if condition="$Request.controller eq 'Rulegroup' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Rulegroup/index.html">角色管理</a> </li>
+			<li {if condition="$Request.controller eq 'Adminlist' && $Request.action eq 'index' "} class="active" {/if}> <a href="/admin/Adminlist/index.html">管理员列表</a> </li>
+		  </ul>
+		</li>
+	
+		<li class="nav-item  ">
+			<a href="/admin/Sys/index.html" {if condition="$Request.controller eq 'Sys' && $Request.action eq 'index' "} class="active" {/if}><i class="mdi mdi-console"></i>系统管理</a> 
+		</li>
+	  </ul>
+	</nav>
+	
+	<div class="sidebar-footer">
+	  <p class="copyright">Copyright &copy; 2020.  All rights <a href="http://www.bootstrapmb.com/">reserved</a>. </p>
+	</div>
+  </div>
+  
+</aside>

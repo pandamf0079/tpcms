@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+<meta name="author" content="peng">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+<link href="__STATIC__/layui/css/layui.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>编辑管理员</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Adminlist/edit_save" method="post" name="form1">
+                           	<div class="form-group" id="rolebtn">
+								<label class="labelfix">管理员角色:</label>
+									{volist name="rolelist" id="v"}
+									<label class="radio radio-inline radio-primary">
+										<input type="radio" name="group" value="{$v.id}" ><span>{$v.title}</span>
+									</label>
+									{/volist}
+						
+							</div>
+							<div class="form-group ">
+                                <label class="labelfix">管理员名:</label>
+                                <input class="form-control" type="text" id="username" name="username" placeholder="请输入用户名.." value="{$res_admin.username}">
+                            </div>
+							<div class="form-group ">
+                                <label class="labelfix">手机:</label>
+                                <input class="form-control" type="text" id="phone" name="phone" placeholder="请输入手机.." value="{$res_admin.phone}">
+                            </div>
+							<div class="form-group ">
+                                <label class="labelfix">邮箱:</label>
+                                <input class="form-control" type="text" id="mail" name="mail" placeholder="请输入邮箱.." value="{$res_admin.mail}">
+                            </div>
+							<div class="form-group ">
+                                <label class="labelfix">密码:</label>
+                                <input class="form-control" type="password" id="pwd" name="pwd" placeholder="请输入6位或以上密码..">*为空就是不修改
+                            </div>
+							<div class="form-group" id="loginbtn">
+								<label class="labelfix">状态:</label>
+								<label class="radio radio-inline radio-primary">
+									<input type="radio" name="status" value="1" checked="checked"><span>允许登陆</span>
+							  	</label>
+							  	<label class="radio radio-inline radio-primary">
+									<input type="radio" name="status" value="-1"><span>禁止登陆</span>
+							  	</label>
+							</div>
+                            <div class="form-group">
+							  <input type="hidden" name="token" value="{$token}"/>
+							  <input type="hidden" name="id" value="{$res_admin.id}"/>
+                              <button class="btn btn-primary btn-w-md" type="submit">保存</button>
+                              <button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
+<script>
+var status = '{$res_admin.status}';
+$("#loginbtn input:radio[value="+status+"]").attr('checked','true');
+var sid = '{$select_id}';
+$("#rolebtn input:radio[value="+sid+"]").attr('checked','true');
+</script>
+
+</body>
+</html>

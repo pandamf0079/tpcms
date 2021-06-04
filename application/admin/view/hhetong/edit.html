@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header">
+					  	<h4>合同查看</h4>
+					  </div>
+                      <div class="card-body">
+                      		
+							<table class="table table-striped">
+							  <tbody>
+								<tr>
+								  <th scope="row">名字:</th>
+								  <td>{$hetong_data.hetong_name}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">状态:</th>
+								  <td>{if $hetong_data.status==1}<span style="color:#F00;">发起没签署</span>{/if}{if $hetong_data.status==2}<span style="color:#090;">签署已完成</span>{/if}{if $hetong_data.status==3}过期或失败{/if}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">项目名:</th>
+								  <td>{$hetong_data.borrowname}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">用户:</th>
+								  <td>{$hetong_data.name}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">用户手机:</th>
+								  <td>{$hetong_data.phone}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">发起日期:</th>
+								  <td>{$hetong_data.addtime|date='Y-m-d H:i:s',###}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">模板ID:</th>
+								  <td>{$hetong_data.mid}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">流程ID:</th>
+								  <td>{$hetong_data.flowid}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">过期时间:</th>
+								  <td>{$hetong_data.expire_time|date='Y-m-d H:i:s',###}</td>
+								
+								</tr>
+								<tr>
+								  <th scope="row">合同预览(点击预览):</th>
+								  <td>
+								  	<a href="{$hetong_data.download}" target="_blank">
+								  		<span class="label label-primary">合同1</span>
+									</a>
+									<a href="/" target="_blank">
+								  		<span class="label label-primary">合同2</span>
+									</a>
+								  </td>
+								
+								</tr>
+							  </tbody>
+							</table>
+							<button class="btn btn-success btn-w-md" type="button">重新发起</button>
+							<button class="btn btn-label btn-primary"><label><i class="mdi mdi-checkbox-marked-circle-outline"></i></label>下载合同</button>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+
+</body>
+</html>

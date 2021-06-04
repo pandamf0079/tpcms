@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>公司信息</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Hcompany/save_company" method="post" name="form1">
+                            <div class="form-group ">
+                                <label>公司名:</label>
+                                <input class="form-control" type="text" id="company_name" name="company_name" placeholder="请输入名字.." value="{$company_data.company_name}">
+                            </div>
+                            <div class="form-group ">
+                                <label>组织代码:</label>
+                                <input class="form-control" type="text" id="company_no" name="company_no" placeholder="请输入组织代码.." value="{$company_data.company_no}">
+                            </div>
+							<div class="form-group ">
+                                <label>公司法人:</label>
+                                <input class="form-control" type="text" id="company_faren" name="company_faren" placeholder="请输入公司法人.." value="{$company_data.company_faren}">
+                            </div>
+                            <div class="form-group ">
+                                <label>公司电话:</label>
+                                <input class="form-control" type="text" id="company_tel" name="company_tel" placeholder="请输入公司电话.." value="{$company_data.company_tel}">
+                            </div>
+							<div class="form-group ">
+                                <label>公司地址:</label>
+                                <input class="form-control" type="text" id="company_address" name="company_address" placeholder="请输入公司地址.." value="{$company_data.company_address}">
+                            </div>
+							
+
+                            <div class="form-group">
+                                <label>公司介绍:</label>
+                                <div >
+                                    <textarea class="form-control" id="company_intro" name="company_intro" rows="6" placeholder="公司介绍.." >{$company_data.company_intro}</textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+								                <input type="hidden" name="token" value="{$token}"/>
+                                <input type="hidden" name="id" value="{$company_data.id}"/>
+                              	<button class="btn btn-primary btn-w-md" type="submit">编辑保存</button>
+                              	<button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+<link rel="stylesheet" href="__ADMINJS__/jconfirm/jquery-confirm.min.css">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  	<div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+        <div class="container-fluid">  
+        	<div class="row">
+          		<div class="col-lg-12">
+            		<div class="card">
+							
+								<div class="panel-heading">
+									<h3 class="panel-title" style="display:inline-block;"><button class="btn btn-primary m-r-5" onclick="add()">添加权限</button></h3>
+									<span style="display:inline-block; color:#999999;">*没有添加到规则的模块,则不受访问限制</span>
+								</div>
+								<div class="panel-body">
+									<table id="demo-dt-basic" class="table table-bordered" cellspacing="0" width="100%">
+										<thead>
+											<tr>
+												<th>权限名</th>
+												<th>权限</th>
+												<th class="min-tablet">操作</th>
+											</tr>
+										</thead>
+										<tbody>
+											{foreach name="tree" item="v" }
+												<tr {if $v.pid==0}class='bgf9'{/if}>
+													<td>{$v['title']}</td>
+													<td>{$v['name']}</td>
+													<td>
+														<a href="javascript:;" ruleId="{$v['id']}" onclick="add_child({$v['id']},'{$v['title']}')">添加子权限</a> | 
+														<a href="{:url('Admin/Rulelist/edit_rule',array('id'=>$v['id']))}" ruleId="{$v['id']}" ruleName="{$v['name']}" ruleTitle="{$v['title']}">修改</a> |
+														<a href="javascript:if(confirm('确定删除？'))location='{:url('Admin/Rulelist/delete',array('id'=>$v['id']))}'">删除</a>
+													</td>
+												</tr>
+												{if condition=" isset($v.child) "}
+												{foreach  name="$v.child" item="vv" }
+													<tr>
+														<td> |---&nbsp;&nbsp;{$vv['title']}</td>
+														<td>{$vv['name']}</td>
+														<td>
+															<a href="javascript:;" ruleId="{$vv['id']}" onclick="add_child({$vv['id']},'{$vv['title']}')">添加子权限</a> | 
+															<a href="{:url('Admin/Rulelist/edit_rule',array('id'=>$vv['id']))}" ruleId="{$vv['id']}" ruleName="{$vv['name']}" ruleTitle="{$vv['title']}">修改</a> |
+															<a href="javascript:if(confirm('确定删除？'))location='{:url('Admin/Rulelist/delete',array('id'=>$vv['id']))}'">删除</a>
+														</td>
+													</tr>
+													{if condition=" isset($vv.child) "}
+													{foreach  name="$vv.child" item="vvv" }
+														<tr>
+															<td>&nbsp;&nbsp;&nbsp;&nbsp;|---&nbsp;&nbsp;{$vvv['title']}</td>
+															<td>{$vvv['name']}</td>
+															<td>
+																<a href="{:url('Admin/Rulelist/edit_rule',array('id'=>$vvv['id']))}" ruleId="{$vvv['id']}" ruleName="{$vvv['name']}" ruleTitle="{$vvv['title']}">修改</a> |
+																<a href="javascript:if(confirm('确定删除？'))location='{:url('Admin/Rulelist/delete',array('id'=>$vvv['id']))}'">删除</a>
+															</td>
+														</tr>
+													{/foreach}
+													{/if}
+												{/foreach}
+												{/if}
+											{/foreach}
+										</tbody>
+									</table>
+								</div>
+						
+					</div>
+          		</div>
+          
+        	</div>
+
+
+        
+      	</div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<div id="modal">
+	<div class="modalhtml">
+		<form action="/admin/Rulelist/save_rule" method="post">
+			<div class="form-group ">
+			  	<label>权限名:</label>
+			  	<input type="text" placeholder="权限名" class="form-control" name="title" id="title" />
+
+			</div>
+			<div class="form-group ">
+				<label>权限:</label>
+			  	<input type="text" placeholder="权限" class="form-control" id="name" name="name" />
+			</div>
+			<div class="form-group ">
+				*输入模块/控制器/方法即可 例如 /Admin/Rule/index
+			</div>
+			<div class="form-group ">
+				<label>父级:</label>
+			  	<span id="parents"></span>
+			</div>
+			<div class="form-group">
+				<input type="hidden" name="pid" value="" id="pid_value"/>
+				<input type="hidden" name="token" value="{$token}"/>
+			  	<button class="btn btn-block btn-primary" type="submit">提交</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+<script src="__ADMINJS__/jconfirm/jquery-confirm.min.js"></script>
+<script src="__STATIC__/layui/layui.js"></script>
+<script>
+function add(){
+	location.href='/admin/Rulelist/addrule.html';
+}
+
+function add_child(pid,str){
+	$("#pid_value").val(pid);
+	$("#parents").html(str);
+	var html = $("#modal").html();
+	layer.open({
+	  type: 1,
+	  title: false,
+	  area: ['400px', '360px'],
+	  closeBtn: 1,
+	  shadeClose: true,
+	  skin: 'yourclass',
+	  content: html
+	});
+}
+</script>
+
+</body>
+</html>

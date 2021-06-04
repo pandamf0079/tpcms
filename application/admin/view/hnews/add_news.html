@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - VC后台管理系统</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+<meta name="author" content="peng">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+<link href="__STATIC__/layui/css/layui.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>添加</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Hnews/save_news" method="post" name="form1">
+                            <div class="form-group ">
+                                <label>文章名字:</label>
+                                <input class="form-control" type="text" id="title" name="title" placeholder="请输入名字..">
+                            </div>
+							<div class="form-group ">
+                                <label>概述:</label>
+								<div >
+                                <textarea class="form-control" id="summary" name="summary" rows="2" placeholder="概述.."></textarea>
+								</div >
+                            </div>
+                           <div class="form-group ">
+                                <label>文章作者:</label>
+                                <input class="form-control" type="text" id="author" name="author" placeholder="请输入文章作者..">
+                            </div>
+
+                            <div class="form-group">
+                                <label>文章内容:</label>
+                                <div >
+                                    <textarea class="form-control" id="content" name="content" rows="12" placeholder="内容.."></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+							  <input type="hidden" name="token" value="{$token}"/>
+                              <button class="btn btn-primary btn-w-md" type="submit">添加</button>
+                              <button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+<script type="text/javascript" src="__STATIC__/layui/layui.js"></script>
+<script>
+layui.use('layedit', function(){
+	var layedit = layui.layedit;
+	layedit.set({
+		uploadImage: {
+			url: '/admin/Hnews/upload', //接口url
+			type: 'post' //默认post
+	  	}
+	});
+	layedit.build(
+		'content',
+		{ height: 400}
+		
+	); //建立编辑器
+});
+</script>
+
+</body>
+</html>

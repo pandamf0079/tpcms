@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>{$page_title} - bootstrap中文后台管理系统模板</title>
+<link rel="icon" href="favicon.ico" type="image/ico">
+
+
+<meta name="author" content="yinqi">
+<link href="__ADMINCSS__/bootstrap.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/materialdesignicons.min.css" rel="stylesheet">
+<link href="__ADMINCSS__/style.css" rel="stylesheet">
+</head>
+  
+<body data-logobg="color_8" data-sidebarbg="color_8">
+<div class="layout-web">
+  <div class="layout-container">
+    <!--左侧导航-->
+    {include file="Common/leftside" /}
+    <!--End 左侧导航-->
+    
+    <!--头部信息-->
+    {include file="Common/topsides" /}
+    <!--End 头部信息-->
+    
+    <!--页面主要内容-->
+    <main class="layout-content">
+      
+        <div class="container-fluid">
+          
+          <div class="row">
+              <div class="col-lg-12">
+                  <div class="card">
+                      <div class="card-header"><h4>商品添加</h4></div>
+                      <div class="card-body">
+                          <form action="/admin/Gift/editsave" method="post" name="form1">
+                            <div class="form-group ">
+                                <label>产品名:</label>
+                                <input class="form-control" type="text" id="name" name="name" placeholder="请输入名字.." value="{$prodata.name}">
+                            </div>
+                            <div class="form-group ">
+                                <label>价钱:</label>
+                                <div class="input-group m-b-10">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" id="price" name="price" value="{$prodata.price}">
+                                    <span class="input-group-addon">.00</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>库存:</label>
+                                <input class="form-control" type="text" id="nums" name="nums" placeholder="请输入库存.." value="{$prodata.nums}">
+                            </div>
+                            
+                      
+                            <div class="form-group">
+                              <label >是否上架:</label>
+                              <br/>
+                              <label class="switch switch-success switch-light ">
+                                <input type="checkbox" {if $prodata.status==1}checked=""{/if} name="status" id="status">
+                                <span></span>
+                              </label>
+                            </div>
+                            
+                            
+
+                            <div class="form-group">
+                                <label>商品描述:</label>
+                                <div >
+                                    <textarea class="form-control" id="content" name="content" rows="6" placeholder="内容.." >{$prodata.content}</textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                            <input type="hidden" name="sid" value="{$prodata.sid}">
+                              <button class="btn btn-primary btn-w-md" type="submit">修改</button>
+                              <button class="btn btn-secondary btn-w-md" type="reset">重置</button>
+                            </div>
+                          </form>
+                      </div>
+                </div>
+            </div>
+          </div>
+
+
+
+
+          
+        </div>
+      
+    </main>
+    <!--End 页面主要内容-->
+  </div>
+</div>
+
+<script type="text/javascript" src="__ADMINJS__/jquery.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/bootstrap.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/perfect-scrollbar.min.js"></script>
+<script type="text/javascript" src="__ADMINJS__/main.js"></script>
+
+
+</body>
+</html>
